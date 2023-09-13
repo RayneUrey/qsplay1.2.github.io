@@ -442,7 +442,7 @@
                     } else if (String(ieee32_wanted * 10 ** dig).substr(0, similarity) > wantedFloat) {
                         let temp_ieee32_wanted = ieee32_wanted
                         let num = 1
-                        while (String(getIeee754_32(temp_ieee32_wanted) * 10 ** dig).substr(0, similarity) > wantedFloat  && String(getIeee754_32(temp_ieee32_wanted) * 10 ** dig).substr(0, similarity) == wantedFloat) {
+                        while (String(getIeee754_32(temp_ieee32_wanted) * 10 ** dig).substr(0, similarity) > wantedFloat  && String(getIeee754_32(temp_ieee32_wanted) * 10 ** dig).substr(0, similarity) != wantedFloat) {
                             num++
                             temp_ieee32_wanted = temp_ieee32_wanted - num / (10 ** dig)
                         }
@@ -461,7 +461,7 @@
                     } else {
                         let temp_ieee32_wanted = ieee32_wanted
                         let num = 1
-                        while (String(getIeee754_32(temp_ieee32_wanted) * 10 ** dig).substr(0, similarity) < wantedFloat  && String(getIeee754_32(temp_ieee32_wanted) * 10 ** dig).substr(0, similarity) == wantedFloat) {
+                        while (String(getIeee754_32(temp_ieee32_wanted) * 10 ** dig).substr(0, similarity) < wantedFloat  && String(getIeee754_32(temp_ieee32_wanted) * 10 ** dig).substr(0, similarity) != wantedFloat) {
                             num++
                             temp_ieee32_wanted = temp_ieee32_wanted + num / (10 ** dig)
                         }
