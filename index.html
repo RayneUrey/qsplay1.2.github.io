@@ -25,7 +25,7 @@
     </style> -->
     <meta charset="UTF-8">
     <!-- import CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  
     
     <style type="text/css">
         div[class='re_div'] {
@@ -53,7 +53,7 @@
             style="width: 10%;background-color: rgb(235, 250, 19);color: brown; text-align: center;"> 关闭</div>
         <div>
 
-            <span>选择你的生日</span><input type="date" id="generateAvailabe" value="2001-01-01" placeholder="请选择做的生日">
+            <span>选择你的生日</span><input type="date" id="generateAvailabe" value="2002-02-04" placeholder="请选择做的生日">
             <input type="button" value="一键导出可做枪皮" onclick="check_Anime_Concentration(1,'generateAvailabe') "><br>
 
             <div id="autoOut" class="re_div" style="width: 100%;">
@@ -213,7 +213,7 @@
 
 
             } else if (methord == 1 && (birthday_input_id == "generateAvailabe")) {
-
+             
                 for(let grade of    ['industry','mil-spec',"restricted",'classfied','classfied',"covert"]){
                     document.getElementById(grade).innerHTML=' '
  
@@ -227,7 +227,7 @@
 
                 let wantedFloat = document.getElementById(birthday_input_id).value.replace('-', '').replace('-', '')
 
-                console.log(wantedFloat)
+           /*      console.log(wantedFloat) */
 
 
                 for (let dig = 8; dig < 12; dig++) {
@@ -240,21 +240,22 @@
                     } else if (String(ieee32_wanted * 10 ** dig).substr(0, similarity) > wantedFloat) {
                         let temp_ieee32_wanted = ieee32_wanted
                         let num = 1
-                        while (String(getIeee754_32(temp_ieee32_wanted) * 10 ** dig).substr(0, similarity) > wantedFloat) {
+                        while (String(getIeee754_32(temp_ieee32_wanted) * 10 ** dig).substr(0, similarity) > wantedFloat &&String((temp_ieee32_wanted * 10 ** dig)).substr(0, similarity) != wantedFloat) {
                             num++
                             temp_ieee32_wanted = temp_ieee32_wanted - num / (10 ** dig)
                         }
                         if (String(getIeee754_32(temp_ieee32_wanted) * 10 ** dig).substr(0, similarity) == wantedFloat) {
                             let averFloat = (wantedFloat / (10 ** dig) - minFloat) / (maxFloat - minFloat)
                             testDig(dig, averFloat)
-                            finalFloats[dig] = (`${temp_ieee32_wanted}可做：`)
+                            /* finalFloats[dig] = (`${temp_ieee32_wanted}可做：`) */
+                            finalFloats[dig] = (`${getIeee754_32(temp_ieee32_wanted)}可做：`)
                         } else {
                             finalFloats[dig] = (`磨损：  ${wantedFloat / (10 ** dig)}  不存在，相似磨损为 ${ieee32_wanted} </br>`)
                         }
                     } else {
                         let temp_ieee32_wanted = ieee32_wanted
                         let num = 1
-                        while (String(getIeee754_32(temp_ieee32_wanted) * 10 ** dig).substr(0, similarity) < wantedFloat) {
+                        while (String(getIeee754_32(temp_ieee32_wanted) * 10 ** dig).substr(0, similarity) < wantedFloat &&String((temp_ieee32_wanted * 10 ** dig)).substr(0, similarity) != wantedFloat) {
                             num++
                             temp_ieee32_wanted = temp_ieee32_wanted + num / (10 ** dig)
                         }
@@ -262,8 +263,11 @@
 
                             let averFloat = (wantedFloat / (10 ** dig) - minFloat) / (maxFloat - minFloat)
                             testDig(dig, averFloat)
-                            finalFloats[dig] = (`${temp_ieee32_wanted}可做：`)
 
+
+                            /* finalFloats[dig] = (`${temp_ieee32_wanted}可做：`) */
+                            finalFloats[dig] = (`${getIeee754_32(temp_ieee32_wanted)}可做：`)
+                            console.log(`${temp_ieee32_wanted}可做：`,wantedFloat,String(getIeee754_32(temp_ieee32_wanted) * 10 ** dig).substr(0, similarity) )
                         } else {
                             finalFloats[dig] = (`磨损：  ${wantedFloat / (10 ** dig)}  不存在，相似磨损为 ${ieee32_wanted} </br>`)
 
@@ -296,7 +300,7 @@
                         console.log(grades)
                         for (let floats in defaultJson[grades]) {
                             /*   console.log(floats) */
-                            console.log(availableFloatsArr, grades, dig)
+                          /*   console.log(availableFloatsArr, grades, dig) */
 
                             if (in_arry(floats, availableFloatsArr) && grades == '工业级') {
 
@@ -314,7 +318,7 @@
                         }
 
                     }
-
+                 
                 }   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -342,7 +346,7 @@
 
             function myfloatZone_AlltTest(tempFloats_arr, lengthtemp, dig) {
                 var similarity = 8
-                console.log("myfloatZone_AlltTest working")
+               /*  console.log("myfloatZone_AlltTest working") */
                 let availableFloatsArr = []
                 let wantedFloat = document.getElementById(birthday_input_id).value.replace('-', '').replace('-', '')
                 for (let i = 0; i < lengthtemp; i++) {
@@ -356,14 +360,14 @@
                         let nine_floats = nineFloats_repeate(averFloat, dig)
 
                         let tenAverTrade = tradeUp(getIeee754_32(nine_floats + getIeee754_32(averFloat)), minFloat, maxFloat)
-                        console.log(tenAverTrade, dig, similarity)
-                        console.log("for")
+                    /*     console.log(tenAverTrade, dig, similarity)
+                        console.log("for") */
                         /*   console.log(dig) */
 
 
                         if (String((tenAverTrade * 10 ** dig)).substr(0, similarity) == wantedFloat) {
                             availableFloatsArr.push(tempFloats_arr[i])////////////////////////different code
-                            console.log("==")
+                         /*    console.log("==") */
                         } else if (String((tenAverTrade * 10 ** dig)).substring(0, similarity) <= wantedFloat) {
                             let simpleTenR_lower = tenAverTrade;
                             let num = 1
@@ -438,11 +442,11 @@
                     } else if (String(ieee32_wanted * 10 ** dig).substr(0, similarity) > wantedFloat) {
                         let temp_ieee32_wanted = ieee32_wanted
                         let num = 1
-                        while (String(getIeee754_32(temp_ieee32_wanted) * 10 ** dig).substr(0, similarity) > wantedFloat) {
+                        while (String(getIeee754_32(temp_ieee32_wanted) * 10 ** dig).substr(0, similarity) > wantedFloat  && String(getIeee754_32(temp_ieee32_wanted) * 10 ** dig).substr(0, similarity) == wantedFloat) {
                             num++
                             temp_ieee32_wanted = temp_ieee32_wanted - num / (10 ** dig)
                         }
-                        if (String(getIeee754_32(temp_ieee32_wanted) * 10 ** dig).substr(0, similarity) == wantedFloat) {
+                        if (String(getIeee754_32(temp_ieee32_wanted) * 10 ** dig).substr(0, similarity) == wantedFloat  ) {
 
                             let averFloat = (wantedFloat / (10 ** dig) - minFloat) / (maxFloat - minFloat)
                             test_float(averFloat, dig, minFloat, maxFloat)
@@ -457,7 +461,7 @@
                     } else {
                         let temp_ieee32_wanted = ieee32_wanted
                         let num = 1
-                        while (String(getIeee754_32(temp_ieee32_wanted) * 10 ** dig).substr(0, similarity) < wantedFloat) {
+                        while (String(getIeee754_32(temp_ieee32_wanted) * 10 ** dig).substr(0, similarity) < wantedFloat  && String(getIeee754_32(temp_ieee32_wanted) * 10 ** dig).substr(0, similarity) == wantedFloat) {
                             num++
                             temp_ieee32_wanted = temp_ieee32_wanted + num / (10 ** dig)
                         }
@@ -543,7 +547,7 @@
                 }////第一层for循环结束
                 ///////////////////////////////遍历0.2、0.020、0.002、0.0002
                 for (let j = 0; j < 4; j++) {
-                    console.log(finalFloats[j])
+                   /*  console.log(finalFloats[j]) */
                     document.getElementById("outPut_queryFloat").innerHTML += finalFloats[j] + (`</br>`)
                 }
 
@@ -667,7 +671,7 @@
         }
 
 
-        console.log(floatsCollect(defaultJson))
+    /*     console.log(floatsCollect(defaultJson)) */
         ////////function in_arry
         function in_arry(item, arry) {
             for (let i of arry) {
