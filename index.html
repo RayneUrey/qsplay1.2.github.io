@@ -80,6 +80,7 @@
     <div id="right_bar">
 
         <span>当前平均磨损：</span> <input type="tel" max="1" min="0" placeholder="当前平均磨损" id="tenCaculate_value">
+        <span>当前炼金结果：</span> <input type="tel" max="1" min="0" placeholder="当前平均磨损" id="tenCaculate_Trade">
     </div>
 
     <div id="paras_needed" style="width: 100%;">
@@ -87,14 +88,14 @@
             <input type="tel" value="8" id="similarity" placeholder="精度" style="width: 30%;">
         </div>
 
-        <span>输入最小磨损：</span> <input type="tel" value="0" id="minFloat" alt="最小磨损" name="最小磨损" title="最小磨损"
+        <span>输入最小磨损：</span> <input type="number" value="0.1" id="minFloat" alt="最小磨损" name="最小磨损" title="最小磨损"
             style="width:10%;">
-        <br><span>输入最大磨损：</span><input type="tel" value="1" id="maxFloat" alt="最大磨损" name="最大磨损" placeholder="最大磨损"
+        <br><span>输入最大磨损：</span><input type="number" value="0.7" id="maxFloat" alt="最大磨损" name="最大磨损" placeholder="最大磨损"
             style="width: 10%;"><br>
 
 
 
-        <span>输入你要做的磨损：</span> <input type="tel" value="20010101" id="wantedFloat" placeholder="请输入8位整数"
+        <span>输入你要做的磨损：</span> <input type="number" value="20040215" id="wantedFloat" placeholder="请输入8位整数"
             style="width: 20%;">
         <input type="button" value="查询  " onclick="check_Anime_Concentration(0,'wantedFloat')"><br>
         <span>选择你的生日</span><input type="date" id="birthday" value="2001-01-01" placeholder="请选择做的生日">
@@ -128,6 +129,10 @@
 
     
     <script>
+
+
+
+
         ///////生成10个输入框
         let flo_div = document.getElementById("flo_div")
         for (let i = 0; i < 10; i++) {
@@ -136,12 +141,13 @@
 
             solo_input.className = 'solo_input'
             solo_input.type = "tel"
-            solo_input.onchange = caculte_myFloat
-            solo_input.value = 0.01 * i
+            solo_input.onchange = changed
+            /* solo_input.value = 0.01 * i */
+            solo_input.value =0.1673369916
             flo_div.appendChild(solo_input)
         }
 
-        caculte_myFloat()
+        changed()
         ///计算10简单结果结束
 
 
@@ -249,10 +255,12 @@
 
 
 
+        document.getElementsByClassName("solo_input")[9].value=0.1673366
 
+ 
+a
 
-
-
+changed()
 
 
 
