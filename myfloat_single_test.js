@@ -3,7 +3,7 @@ function myfloat_single_test(wantedFloat, minFloat, maxFloat, similarity) {
 
     //////////////////////////////遍历
     for (let dig = 8; dig < 12; dig++) {
-        let ieee32_wanted = getIeee754_32(wantedFloat / (10 ** dig))
+        let ieee32_wanted = ie32(wantedFloat / (10 ** dig))
 
 
         if (String(ieee32_wanted * 10 ** dig).substr(0, similarity) == wantedFloat) {
@@ -15,11 +15,11 @@ function myfloat_single_test(wantedFloat, minFloat, maxFloat, similarity) {
         } else if (String(ieee32_wanted * 10 ** dig).substr(0, similarity) > wantedFloat) {
             let temp_ieee32_wanted = ieee32_wanted
             let num = 1
-            while (String(getIeee754_32(temp_ieee32_wanted) * 10 ** dig).substr(0, similarity) > wantedFloat  && String(getIeee754_32(temp_ieee32_wanted) * 10 ** dig).substr(0, similarity) != wantedFloat) {
+            while (String(ie32(temp_ieee32_wanted) * 10 ** dig).substr(0, similarity) > wantedFloat  && String(ie32(temp_ieee32_wanted) * 10 ** dig).substr(0, similarity) != wantedFloat) {
                 num++
                 temp_ieee32_wanted = temp_ieee32_wanted - num / (10 ** dig)
             }
-            if (String(getIeee754_32(temp_ieee32_wanted) * 10 ** dig).substr(0, similarity) == wantedFloat  ) {
+            if (String(ie32(temp_ieee32_wanted) * 10 ** dig).substr(0, similarity) == wantedFloat  ) {
 
                 let averFloat = (wantedFloat / (10 ** dig) - minFloat) / (maxFloat - minFloat)
                 test_float(averFloat, dig, minFloat, maxFloat)
@@ -34,11 +34,11 @@ function myfloat_single_test(wantedFloat, minFloat, maxFloat, similarity) {
         } else {
             let temp_ieee32_wanted = ieee32_wanted
             let num = 1
-            while (String(getIeee754_32(temp_ieee32_wanted) * 10 ** dig).substr(0, similarity) < wantedFloat  && String(getIeee754_32(temp_ieee32_wanted) * 10 ** dig).substr(0, similarity) != wantedFloat) {
+            while (String(ie32(temp_ieee32_wanted) * 10 ** dig).substr(0, similarity) < wantedFloat  && String(ie32(temp_ieee32_wanted) * 10 ** dig).substr(0, similarity) != wantedFloat) {
                 num++
                 temp_ieee32_wanted = temp_ieee32_wanted + num / (10 ** dig)
             }
-            if (String(getIeee754_32(temp_ieee32_wanted) * 10 ** dig).substr(0, similarity) == wantedFloat) {
+            if (String(ie32(temp_ieee32_wanted) * 10 ** dig).substr(0, similarity) == wantedFloat) {
 
                 let averFloat = (wantedFloat / (10 ** dig) - minFloat) / (maxFloat - minFloat)
                 test_float(averFloat, dig, minFloat, maxFloat)
@@ -53,20 +53,6 @@ function myfloat_single_test(wantedFloat, minFloat, maxFloat, similarity) {
 
 
 
-
-        /*  let averFloat = (wantedFloat / (10 ** dig) - minFloat) / (maxFloat - minFloat)
-                 test_float(averFloat, dig, minFloat, maxFloat) */
-
-
-
-
-        ////////////////////////////////////get final_float
-
-
-
-
-        ////////////////////////////////////generate result
-
         function test_float(averFloat, dig, minFloat, maxFloat) {
 
 
@@ -75,9 +61,10 @@ function myfloat_single_test(wantedFloat, minFloat, maxFloat, similarity) {
 
 
             let nine_floats = nineFloats_repeate(averFloat, dig)
-
-            let tenAverTrade = tradeUp(getIeee754_32(nine_floats + getIeee754_32(averFloat)), minFloat, maxFloat)
-            if (String((tenAverTrade * 10 ** dig)).substr(0, similarity) == wantedFloat) {
+            console.log(nine_floats,averFloat)
+            let tenAverTrade = tradeUp(ie32(nine_floats + ie32(averFloat)), minFloat, maxFloat)
+            if (String((tenAverTrade * 10 ** dig)).substring(0, similarity) == wantedFloat) {
+                console.log(tenAverTrade,"makeed")
                 finalFloats.push(`可做${tenAverTrade}</br>`)
 
             } else if (String((tenAverTrade * 10 ** dig)).substring(0, similarity) <= wantedFloat) {
@@ -85,11 +72,11 @@ function myfloat_single_test(wantedFloat, minFloat, maxFloat, similarity) {
                 let num = 1
                 while (simpleTenR_lower <= wantedFloat / (10 ** dig) && String((simpleTenR_lower * 10 ** dig)).substr(0, similarity) != wantedFloat) {
 
-                    simpleTenR_lower = tradeUp(getIeee754_32(nine_floats + getIeee754_32(averFloat + num / (10 ** dig))), minFloat, maxFloat)
+                    simpleTenR_lower = tradeUp(ie32(nine_floats + ie32(averFloat + num / (10 ** dig))), minFloat, maxFloat)
                     num++
                     console.log(simpleTenR_lower.toFixed(16))
                 }
-                if (String((simpleTenR_lower * 10 ** dig)).substr(0, similarity) == wantedFloat) { finalFloats.push(`可做${simpleTenR_lower}</br>`) } else { finalFloats.push(`该枪皮 ${wantedFloat / (10 ** dig)} 不可做,相似磨损</br> ${tenAverTrade}  '   or    '  ${simpleTenR_lower}</br> `) }
+                if (String((simpleTenR_lower * 10 ** dig)).substring(0, similarity) == wantedFloat) { finalFloats.push(`可做${simpleTenR_lower}</br>`) } else { finalFloats.push(`该枪皮 ${wantedFloat / (10 ** dig)} 不可做,相似磨损</br> ${tenAverTrade}  '   or    '  ${simpleTenR_lower}</br> `) }
 
 
 
@@ -100,11 +87,11 @@ function myfloat_single_test(wantedFloat, minFloat, maxFloat, similarity) {
 
                 while (simpleTenR_greater >= wantedFloat / (10 ** dig) && String((simpleTenR_greater * 10 ** dig)).substr(0, similarity) != wantedFloat) {
 
-                    simpleTenR_greater = tradeUp(getIeee754_32(nine_floats + getIeee754_32(averFloat - num / (10 ** dig))), minFloat, maxFloat)
+                    simpleTenR_greater = tradeUp(ie32(nine_floats + ie32(averFloat - num / (10 ** dig))), minFloat, maxFloat)
                     num++
                     console.log(simpleTenR_greater)
                 }
-                if (String((simpleTenR_greater * 10 ** dig)).substr(0, similarity) == wantedFloat) { finalFloats.push(`可做${simpleTenR_greater}</br>`) } else { finalFloats.push(`该枪皮 ${wantedFloat / (10 ** dig)} 不可做,相似磨损</br> ${tenAverTrade}     or     ${simpleTenR_greater}  </br> `) }
+                if (String((simpleTenR_greater * 10 ** dig)).substring(0, similarity) == wantedFloat) { finalFloats.push(`可做${simpleTenR_greater}</br>`) } else { finalFloats.push(`该枪皮 ${wantedFloat / (10 ** dig)} 不可做,相似磨损</br> ${tenAverTrade}     or     ${simpleTenR_greater}  </br> `) }
 
 
 
