@@ -7,7 +7,7 @@ function ie32(number){    //缩写
 }
 
  function tradeUp(totalFloat, minFloat, maxFloat) {
-    let tradeUpResult = ie32(        ie32(     ie32(totalFloat)*   ie32(ie32(maxFloat) - ie32(minFloat)))/ ie32(10)) + ie32(minFloat)
+    let tradeUpResult = ie32(        ie32(     ie32(totalFloat)/ ie32(10))   *   ie32(   ie32(maxFloat) - ie32(minFloat))) + ie32(minFloat)
         
         return ie32(tradeUpResult) 
                          
